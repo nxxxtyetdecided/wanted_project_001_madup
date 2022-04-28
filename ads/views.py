@@ -65,7 +65,7 @@ def result_detail(request, pk):
         return JsonResponse(serializer.data)
 
 #다른 코드가 정리되면 GET은 삭제하고 URL을 변경할 예정입니다
-@api_view(['POST', 'GET'])
+@api_view(['POST'])
 def get_create_ad(request):    
     """
     김석재
@@ -109,8 +109,6 @@ def get_create_ad(request):
             new_ad.estimated_spend = request.data['estimated_spend']
             if float(request.data['estimated_spend']) < 0:
                 return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
-
-        
         
         for day in range(day.days+1):
             date = start + timedelta(days=day)
@@ -123,11 +121,10 @@ def get_create_ad(request):
         serializer = AdSerializer(new_ad)
         return Response(serializer.data)
     
-    #테스트용 삭제예정
-    elif request.method == 'GET':
-        res1 = Result.objects.filter(ad_id=8)
-        serializer2 = ResultSerializer(res1, many=True)
-        return Response(serializer2.data)
+    #POST가 아닐때
+    else :
+        return Response({'MESSAGE': 'Method Not Allowed'}, status = 405)
+        
 
 
 @api_view(['PATCH', 'DELETE'])
