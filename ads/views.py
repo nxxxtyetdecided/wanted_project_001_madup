@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404
+import json
+
+from datetime import datetime
 from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework import viewsets
-from rest_framework import status
-from rest_framework.response import Response
-from .models import Ad, Result
 from .serializers import AdSerializer, ResultSerializer
 from rest_framework.decorators import api_view
+
+from ads.models import Ad, Result
+from ads.serializers import AdSerializer
 
 @api_view(['GET'])
 def ad_list(request):
@@ -60,10 +60,45 @@ def result_detail(request, pk):
         return JsonResponse(serializer.data)
 
 @api_view(['PATCH', 'DELETE'])
-def update_delete_ad(request):
+def update_delete_ad(request, advertiser, uid):
+    """
+    권상현 / 정미정
+    """
     if request.method == 'PATCH':
-        pass
+        """
+        권상현
+        """
+        try:
+            data = json.loads(request.body)
+            ad = Ad.objects.get(user = advertiser, uid = uid)
 
+            start_date = datetime.strptime(str(data['start_date']), '%Y-%m-%d').date(),
+            end_date = datetime.strptime(str(data['end_date']), '%Y-%m-%d').date(),
+            budget = data['budget']
+            estimated_spend = data['estimated_spend']
+
+            if start_date <= datetime.now().date():
+                return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
+
+            if start_date >= end_date:
+                return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
+
+            if budget < 0 or estimated_spend < 0:
+                return JsonResponse({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+
+            ad.start_date = start_date
+            ad.end_date = end_date
+            ad.budget = budget
+            ad.estimated_spend = estimated_spend
+            ad.save()
+
+            return JsonResponse({'MESSAGE': 'SUCCESS'}, status = 200)
+        
+        except KeyError:
+            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status = 400)
+
+        except Ad.DoesNotExist:
+            return JsonResponse({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = 404)
 
     elif request.method == 'DELETE':
         pass

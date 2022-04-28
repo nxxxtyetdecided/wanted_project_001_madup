@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import SelectDateWidget
 
 from core.models import TimeStampModel
 
