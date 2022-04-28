@@ -4,7 +4,9 @@ atomicwrites==1.4.0
 attrs==21.4.0
 backcall==0.2.0
 certifi==2020.6.20
+cffi==1.15.0
 colorama==0.4.4
+cryptography==37.0.1
 decorator==5.1.1
 Django==4.0.4
 django-cors-headers==3.11.0
@@ -26,6 +28,7 @@ prompt-toolkit==3.0.29
 ptyprocess==0.7.0
 pure-eval==0.2.2
 py==1.11.0
+pycparser==2.21
 Pygments==2.12.0
 PyMySQL==1.0.2
 pyparsing==3.0.8
