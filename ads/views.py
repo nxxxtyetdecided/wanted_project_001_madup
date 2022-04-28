@@ -1,14 +1,17 @@
 import json
 
-from datetime import datetime
+from datetime import datetime,timedelta
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 
-from .serializers import AdSerializer, ResultSerializer
+from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from .serializers import AdSerializer, ResultSerializer
 
 from ads.models import Ad, Result
 from ads.serializers import AdSerializer
+
+
 
 @api_view(['GET'])
 def ad_list(request):
@@ -60,6 +63,69 @@ def result_detail(request, pk):
     if request.method == 'GET':
         serializer = ResultSerializer(result)
         return JsonResponse(serializer.data)
+
+#다른 코드가 정리되면 GET은 삭제하고 URL을 변경할 예정입니다
+@api_view(['POST', 'GET'])
+def get_create_ad(request):    
+        
+    # 필수 입력값 4개(ad) + 1개 (result) 입력시 ad를 하나(캠페인)생성 , 기간에 따라 하루마다 하나씩 result를 생성
+    if request.method == 'POST':
+
+        start_date = request.data['start_date']
+        end_date   = request.data['end_date']
+        user_id    = request.data['user_id']
+        media      = request.data['media']
+        uid        = request.data['uid']       
+        
+        #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
+        start = datetime.strptime(start_date, '%Y-%m-%d')
+        end   = datetime.strptime(end_date, '%Y-%m-%d')
+        day   = end - start 
+        
+        if start < datetime.now():
+            return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
+        if start >= end:
+            return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
+        
+
+        
+        new_ad = Ad.objects.create(
+            start_date = start_date,
+            end_date   = end_date,
+            user_id    = user_id,
+            uid        = uid
+        )
+        
+        #필수 데이터 외에 추가데이터
+        if 'budget' in request.data:
+            new_ad.budget          = request.data['budget']
+            if float(request.data['budget']) < 0:
+                return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+            
+        if 'estimated_spend' in request.data:
+            new_ad.estimated_spend = request.data['estimated_spend']
+            if float(request.data['estimated_spend']) < 0:
+                return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+
+        
+        
+        for day in range(day.days+1):
+            date = start + timedelta(days=day)
+            Result.objects.create(
+                ad=new_ad,
+                media=media,
+                date=date
+            )
+
+        serializer = AdSerializer(new_ad)
+        return Response(serializer.data)
+    
+    #테스트용 삭제예정
+    elif request.method == 'GET':
+        res1 = Result.objects.filter(ad_id=8)
+        serializer2 = ResultSerializer(res1, many=True)
+        return Response(serializer2.data)
+
 
 @api_view(['PATCH', 'DELETE'])
 def update_delete_ad(request, advertiser, uid):
