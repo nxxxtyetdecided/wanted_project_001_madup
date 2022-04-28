@@ -19,6 +19,7 @@ def ad_list(request):
         serializer = AdSerializer(ads, many=True)
         return JsonResponse(serializer.data, safe=False)
 
+# 클릭당 코스트
 
 @api_view(['GET'])
 def ad_detail(request, pk):

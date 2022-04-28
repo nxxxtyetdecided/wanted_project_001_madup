@@ -11,6 +11,6 @@ urlpatterns = [
     path('advertise/<str:pk>', views.ad_detail),
     path('result', views.result_list),
     path('result/<int:pk>', views.result_detail),
-
+    path('test',views.get_create_ad)
 ]
 
