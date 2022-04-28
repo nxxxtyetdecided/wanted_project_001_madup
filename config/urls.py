@@ -20,9 +20,5 @@ from ads import views
 urlpatterns = [
     path('admin', admin.site.urls),
     path('api-auth', include('rest_framework.urls')),
-<<<<<<< HEAD
-    path('advertise',views.post_create_ad)
-=======
     path('advertise/',include('ads.urls'))
->>>>>>> 53adf90461f7bd1473feaa119e5a634cec690df1
 ]
