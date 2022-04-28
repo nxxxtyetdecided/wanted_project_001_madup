@@ -19,5 +19,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin', admin.site.urls),
     path('api-auth', include('rest_framework.urls')),
-    path('advertise/',include('ads.urls'))
+    path('',include('ads.urls'))
 ]
