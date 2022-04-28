@@ -30,9 +30,25 @@ class AdViewSet(viewsets.ViewSet):
 @csrf_exempt
 def ad_list(request):
     """
-    List all code ads
+    류성훈
+    모든 광고들의 정보를 조회합니다.
     """
     if request.method == 'GET':
         ads = Ad.objects.all()
         serializer = AdSerializer(ads, many=True)
         return JsonResponse(serializer.data, safe=False)
+
+
+@csrf_exempt
+def ad_detail(request, pk):
+    """
+    류성훈
+    """
+    try:
+        ad = Ad.objects.get(uid=pk)
+    except Ad.DoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        serializer = AdSerializer(ad)
+        return JsonResponse(serializer.data)
