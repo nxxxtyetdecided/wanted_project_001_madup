@@ -9,5 +9,6 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
     path('', views.ad_list),
     path('<str:pk>/', views.ad_detail),
+    path('test',views.get_create_ad)
 ]
 
