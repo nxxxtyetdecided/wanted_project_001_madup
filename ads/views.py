@@ -67,6 +67,9 @@ def result_detail(request, pk):
 #다른 코드가 정리되면 GET은 삭제하고 URL을 변경할 예정입니다
 @api_view(['POST', 'GET'])
 def get_create_ad(request):    
+    """
+    김석재
+    """
         
     # 필수 입력값 4개(ad) + 1개 (result) 입력시 ad를 하나(캠페인)생성 , 기간에 따라 하루마다 하나씩 result를 생성
     if request.method == 'POST':
