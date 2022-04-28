@@ -2,6 +2,8 @@ import json
 
 from datetime import datetime
 from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+
 from .serializers import AdSerializer, ResultSerializer
 from rest_framework.decorators import api_view
 
@@ -101,5 +103,16 @@ def update_delete_ad(request, advertiser, uid):
             return JsonResponse({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = 404)
 
     elif request.method == 'DELETE':
-        pass
+        """
+                    정미정 (soft delete로 구현)
+                """
+        try:
+            ad = Ad.objects.get(uid=uid)
+            serializer = AdSerializer(ad)
+            ad.delete_at = datetime.now()
+            ad.is_delete = True
+            ad.save()
+            return JsonResponse(status=status.HTTP_201_CREATED, data=serializer.data)
+        except Ad.DoesNotExist:
+            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
