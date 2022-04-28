@@ -6,7 +6,7 @@ from core.models import TimeStampModel
 
 class Ad(TimeStampModel):
     user = models.ForeignKey('users.User', db_index=True, on_delete=models.CASCADE)  # 광고주 id
-    uid = models.CharField(max_length=50, primary_key=True)  # 해당 광고 고유 번호
+    uid = models.CharField(max_length=50, db_index=True, primary_key=True)  # 해당 광고 고유 번호
     start_date = models.DateField(null=True, blank=True)  # 광고 시작 날짜
     end_date = models.DateField(null=True, blank=True)  # 광고 종료 날짜
     budget = models.DecimalField(max_digits=19, decimal_places=2, null=True, blank=True) # 광고 집행 예산
@@ -19,9 +19,9 @@ class Ad(TimeStampModel):
 
 
 class Result(TimeStampModel):
-    ad = models.ForeignKey('Ad', on_delete=models.CASCADE)
-    media = models.CharField(max_length=15)
-    date = models.DateField()
+    ad = models.ForeignKey('Ad', on_delete=models.CASCADE, db_index=True)
+    media = models.CharField(max_length=15, db_index=True)
+    date = models.DateField(db_index=True)
     cost = models.PositiveIntegerField()
     impression = models.PositiveIntegerField()
     click = models.PositiveIntegerField()
