@@ -6,8 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Ad
 from .serializers import AdSerializer
+from rest_framework.decorators import api_view
 
-@csrf_exempt
+@api_view(['GET'])
 def ad_list(request):
     """
     류성훈
@@ -19,7 +20,7 @@ def ad_list(request):
         return JsonResponse(serializer.data, safe=False)
 
 
-@csrf_exempt
+@api_view(['GET'])
 def ad_detail(request, pk):
     """
     류성훈
