@@ -7,8 +7,10 @@ from ads import views
 from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
-    path('', views.ad_list),
-    path('<str:pk>/', views.ad_detail),
+    path('advertise', views.ad_list),
+    path('advertise/<str:pk>', views.ad_detail),
+    path('result', views.result_list),
+    path('result/<int:pk>', views.result_detail),
     path('test',views.get_create_ad)
 ]
 
