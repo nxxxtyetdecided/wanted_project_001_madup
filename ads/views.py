@@ -74,12 +74,20 @@ def get_create_ad(request):
     # 필수 입력값 4개(ad) + 1개 (result) 입력시 ad를 하나(캠페인)생성 , 기간에 따라 하루마다 하나씩 result를 생성
     if request.method == 'POST':
 
+<<<<<<< HEAD
         start_date = request.data['start_date']
         end_date   = request.data['end_date']
         
         user_id    = request.data['user_id']
         media      = request.data['media']
         uid        = request.data['uid']       
+=======
+        start_date    = request.data['start_date']
+        end_date      = request.data['end_date']
+        advertiser_id = request.data['advertiser_id']
+        media         = request.data['media']
+        uid           = request.data['uid']       
+>>>>>>> 825ee988ae643e8bca14e2868961bb05df86dd0e
         
         #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
         start = datetime.strptime(start_date, '%Y-%m-%d')
@@ -94,15 +102,15 @@ def get_create_ad(request):
 
         
         new_ad = Ad.objects.create(
-            start_date = start_date,
-            end_date   = end_date,
-            user_id    = user_id,
-            uid        = uid
+            start_date    = start_date,
+            end_date      = end_date,
+            advertiser_id = advertiser_id,
+            uid           = uid
         )
         
         #필수 데이터 외에 추가데이터
         if 'budget' in request.data:
-            new_ad.budget          = request.data['budget']
+            new_ad.budget = request.data['budget']
             if float(request.data['budget']) < 0:
                 return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
             
@@ -114,9 +122,9 @@ def get_create_ad(request):
         for day in range(day.days+1):
             date = start + timedelta(days=day)
             Result.objects.create(
-                ad=new_ad,
-                media=media,
-                date=date
+                ad = new_ad,
+                media = media,
+                date = date
             )
 
         serializer = AdSerializer(new_ad)
@@ -139,7 +147,7 @@ def update_delete_ad(request, advertiser, uid):
         """
         try:
             data = json.loads(request.body)
-            ad = Ad.objects.get(user = advertiser, uid = uid)
+            ad = Ad.objects.get(advertiser = advertiser, uid = uid)
             start_date = data.get('start_date', ad.start_date)
             end_date = data.get('end_date', ad.end_date)
             budget = data.get('budget', ad.budget)
