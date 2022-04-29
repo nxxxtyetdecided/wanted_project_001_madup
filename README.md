@@ -61,7 +61,7 @@ DB의 데이터를 이용해 API를 구현하는 기본적인 설계 및 개발 
 
 ![](https://velog.velcdn.com/images/gshduet/post/220c7257-8de0-4cbf-8327-43c20969340c/image.png)
 
-![image](https://user-images.githubusercontent.com/86823305/165966813-ae13e40b-6c4b-466b-be26-a5a8017b78eb.png)
+![image](https://user-images.githubusercontent.com/86823305/165967318-6f562e91-de4a-4a03-a899-7ee5a98e0d5b.png)
 
 
 Django TestCase 라이브러리로 구현된 5개의 유닛테스트와 PyTest로 구현 된 15개의 유닛테스트 
