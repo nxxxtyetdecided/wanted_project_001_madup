@@ -153,11 +153,13 @@ def update_delete_ad(request, advertiser, uid):
         """
         try:
             ad = Ad.objects.get(uid=uid)
+            if ad.is_delete == True:
+                raise Ad.DoesNotExist
             serializer = AdSerializer(ad)
             ad.delete_at = datetime.now()
             ad.is_delete = True
             ad.save()
-            return JsonResponse({'MESSAGE': 'SUCCESS'}, status=status.HTTP_201_CREATED, data=serializer.data)
+            return JsonResponse({'MESSAGE': 'SUCCESS'}, status=status.HTTP_200_OK)
 
         except Ad.DoesNotExist:
             return JsonResponse({'MESSAGE': 'AD_DOES_NOT_EXIST'}, status=status.HTTP_404_NOT_FOUND)
