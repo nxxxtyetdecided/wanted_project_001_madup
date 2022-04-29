@@ -23,7 +23,6 @@ def get_result(request):
     """
     # 광고주의 id 받아오기
     advertiser_id = request.GET.get('advertiser', None)
-    print("광고주 advertiser:",advertiser_id)
     
     try:
         start_date = request.GET.get('start_date', None)
