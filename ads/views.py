@@ -80,6 +80,9 @@ def get_create_ad(request):
         media         = request.data['media']
         uid           = request.data['uid']       
         
+        if not start_date or not end_date or not advertiser_id or not media or not uid:
+            return Response({'MESSAGE': 'MISSING_VALUE'}, status = 400)
+        
         #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
         start = datetime.strptime(start_date, '%Y-%m-%d')
         end   = datetime.strptime(end_date, '%Y-%m-%d')
@@ -113,17 +116,14 @@ def get_create_ad(request):
         for day in range(day.days+1):
             date = start + timedelta(days=day)
             Result.objects.create(
-                ad = new_ad,
+                uid   = new_ad,
                 media = media,
-                date = date
+                date  = date
             )
 
         serializer = AdSerializer(new_ad)
         return Response(serializer.data)
-    
-    #POST가 아닐때
-    else :
-        return Response({'MESSAGE': 'Method Not Allowed'}, status = 405)
+   
         
 
 

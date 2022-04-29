@@ -3,7 +3,7 @@ from ads import views
 
 
 urlpatterns = [
-    path('', views.ad_list),
+    path('aa', views.ad_list),
     path('<str:pk>', views.ad_detail),
     path('result', views.result_list),
     path('result/<str:pk>', views.result_detail),
