@@ -28,12 +28,11 @@ def get_result(request):
         return Response("타입이 잘못되었습니다.", status=404)
 
     # 광고주의 광고들을 불러옵니다.
-    advertiser = Ad.objects.filter(advertiser=advertiser_id)
+    advertiser = Ad.objects.filter(advertiser=advertiser_id, is_delete=False)
     if not advertiser:
         return Response("존재하지 않는 광고주 id입니다.", status=404)
     
     advertiser_uid = advertiser.values('uid')
-
     
     media_list = ['naver', 'facebook', 'google', 'kekeo']
     
