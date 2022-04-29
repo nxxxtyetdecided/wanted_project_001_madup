@@ -49,11 +49,11 @@ def get_result(request):
             )
 
             val = {
-                'ctr' : math.trunc((total['total_click'] * 10000 / total['total_impression']))/100,
-                'roas': math.trunc(total['total_cv'] * 10000 / total['total_cost'])/100,
-                'cpc' : math.trunc(total['total_cost'] * 100 / total['total_click'])/100,
-                'cvr' : math.trunc(total['total_conversion'] * 10000 / total['total_click'])/100,
-                'cpa' : math.trunc(total['total_cost'] * 100 / total['total_conversion'])/100,
+                'ctr' : 0 if total['total_impression']==0 else math.trunc((total['total_click'] * 10000 / total['total_impression']))/100,
+                'roas': 0 if total['total_cost']==0 else math.trunc(total['total_cv'] * 10000 / total['total_cost'])/100,
+                'cpc' : 0 if total['total_click']==0 else math.trunc(total['total_cost'] * 100 / total['total_click'])/100,
+                'cvr' : 0 if total['total_click']==0 else math.trunc(total['total_conversion'] * 10000 / total['total_click'])/100,
+                'cpa' : 0 if total['total_conversion']==0 else math.trunc(total['total_cost'] * 100 / total['total_conversion'])/100,
             }
 
             answer[media] = val
