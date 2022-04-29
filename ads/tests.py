@@ -1,13 +1,15 @@
 import json
 import pytest
 
-from django.test import TestCase, Client
-from rest_framework import status
-from django.urls import reverse
+from datetime            import datetime
+from django.test         import TestCase, Client
+from django.urls         import reverse
+from rest_framework      import status
+from rest_framework.test import APITestCase
 
 from users.models import User
-from ads import views
-from ads.models import Ad, Result
+from ads          import views
+from ads.models   import Ad, Result
 
 
 @pytest.mark.django_db()
@@ -210,3 +212,55 @@ class AdUpdateTest(TestCase):
 
         self.assertEquals(response.json(),{'MESSAGE':'AD_DOES_NOT_EXIST'})
         self.assertEquals(response.status_code, status.HTTP_404_NOT_FOUND)
+
+"""
+    정미정
+"""
+class AdDeleteTest(APITestCase):
+    def setUp(self):
+        a = User.objects.create(advertiser="1234")
+
+        self.data = {
+            "advertiser_id": "1234",
+            "start_date": "2022-04-30",
+            "end_date": "2022-05-30",
+            "budget": "11.1",
+            "estimated_spend": "51.1",
+            "uid": "ad-1819",
+        }
+        self.delete = {
+            'is_delete': True,
+            'delete_at': datetime.now(),
+        }
+
+    def test_delete_advertise(self):
+        """
+            광고 soft-delete
+        """
+        b = Ad.objects.create(**self.data)
+
+        response = self.client.delete(
+            reverse(views.update_delete_ad,
+                    kwargs={
+                        'advertiser': b.advertiser,
+                        'uid': "ad-1819",
+                    }),
+            data=self.delete, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_impossible_delete_advertise(self):
+        """
+            광고의 uid가 일치하지 않을 때 soft-delete 불가
+        """
+        b = Ad.objects.create(**self.data)
+
+        response = self.client.delete(
+            reverse(views.update_delete_ad,
+                    kwargs={
+                        'advertiser': b.advertiser,
+                        'uid': "ad-1810",  # 생성한 uid와 동일하지 않음
+                    }),
+            data=self.delete, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND) 

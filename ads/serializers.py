@@ -1,5 +1,5 @@
+from ads.models     import Ad, Result
 from rest_framework import serializers
-from .models import Ad, Result
 
 class AdSerializer(serializers.ModelSerializer):
     class Meta:
