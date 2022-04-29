@@ -139,16 +139,15 @@ def update_delete_ad(request, advertiser, uid):
         try:
             data = json.loads(request.body)
             ad = Ad.objects.get(user = advertiser, uid = uid)
-
-            start_date = datetime.strptime(str(data['start_date']), '%Y-%m-%d').date(),
-            end_date = datetime.strptime(str(data['end_date']), '%Y-%m-%d').date(),
-            budget = data['budget']
-            estimated_spend = data['estimated_spend']
+            start_date = data.get('start_date', ad.start_date)
+            end_date = data.get('end_date', ad.end_date)
+            budget = data.get('budget', ad.budget)
+            estimated_spend = data.get('estimated_spend', ad.estimated_spend)
 
             if start_date <= datetime.now().date():
                 return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
 
-            if start_date >= end_date:
+            if start_date > end_date:
                 return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
 
             if budget < 0 or estimated_spend < 0:
