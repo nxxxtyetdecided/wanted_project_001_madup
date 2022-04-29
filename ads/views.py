@@ -1,17 +1,15 @@
-
 import json
 import math
 
-from datetime import datetime,timedelta
-from django.db.models import Sum
-from django.http import JsonResponse
-from rest_framework import status
-
-from rest_framework.response import Response
+from datetime                  import datetime,timedelta
+from django.db.models          import Sum
+from django.http               import JsonResponse
+from rest_framework            import status
+from rest_framework.response   import Response
 from rest_framework.decorators import api_view
-from .serializers import AdSerializer
 
-from ads.models import Ad, Result
+from ads.serializers import AdSerializer
+from ads.models      import Ad, Result
 from ads.serializers import AdSerializer
 
 
@@ -25,7 +23,7 @@ def get_result(request):
     
     try:
         start_date = request.GET.get('start_date', None)
-        end_date = request.GET.get('end_date', None)
+        end_date   = request.GET.get('end_date', None)
     except TypeError:
         return Response("타입이 잘못되었습니다.", status=404)
 
@@ -44,19 +42,19 @@ def get_result(request):
         objs = Result.objects.filter(uid__in=advertiser_uid, date__gte=start_date, date__lte=end_date, media=media)
         if objs:
             total = objs.aggregate(
-                total_click=Sum('click'),
+                total_click      =Sum('click'),
                 total_impression = Sum('impression'),
-                total_cost = Sum('cost'),
+                total_cost       = Sum('cost'),
                 total_conversion = Sum('conversion'),
                 total_cv = Sum('cv'),
             )
 
             val = {
-                'ctr': math.trunc((total['total_click'] * 10000 / total['total_impression']))/100,
+                'ctr' : math.trunc((total['total_click'] * 10000 / total['total_impression']))/100,
                 'roas': math.trunc(total['total_cv'] * 10000 / total['total_cost'])/100,
-                'cpc': math.trunc(total['total_cost'] * 100 / total['total_click'])/100,
-                'cvr': math.trunc(total['total_conversion'] * 10000 / total['total_click'])/100,
-                'cpa': math.trunc(total['total_cost'] * 100 / total['total_conversion'])/100,
+                'cpc' : math.trunc(total['total_cost'] * 100 / total['total_click'])/100,
+                'cvr' : math.trunc(total['total_conversion'] * 10000 / total['total_click'])/100,
+                'cpa' : math.trunc(total['total_cost'] * 100 / total['total_conversion'])/100,
             }
 
             answer[media] = val
@@ -79,7 +77,7 @@ def post_create_ad(request):
         uid           = request.data['uid']       
         
         if not start_date or not end_date or not advertiser_id or not media or not uid:
-            return Response({'MESSAGE': 'MISSING_VALUE'}, status = 400)
+            return Response({'MESSAGE' : 'MISSING_VALUE'}, status = 400)
         
         #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
         start = datetime.strptime(start_date, '%Y-%m-%d')
@@ -87,9 +85,9 @@ def post_create_ad(request):
         day   = end - start 
         
         if start < datetime.now():
-            return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
+            return Response({'MESSAGE' : 'INVALID_DATE'}, status = 400)
         if start >= end:
-            return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
+            return Response({'MESSAGE' : 'INVALID_DATE'}, status = 400)
         
         new_ad = Ad.objects.create(
             start_date    = start_date,
@@ -102,12 +100,12 @@ def post_create_ad(request):
         if 'budget' in request.data:
             new_ad.budget = request.data['budget']
             if float(request.data['budget']) < 0:
-                return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+                return Response({'MESSAGE' : 'INVALID_VALUE'}, status = 400)
             
         if 'estimated_spend' in request.data:
             new_ad.estimated_spend = request.data['estimated_spend']
             if float(request.data['estimated_spend']) < 0:
-                return Response({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+                return Response({'MESSAGE' : 'INVALID_VALUE'}, status = 400)
         
         for day in range(day.days+1):
             date = start + timedelta(days=day)
@@ -140,7 +138,7 @@ def update_delete_ad(request, advertiser, uid):
             
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
-                return Response({'MESSAGE': 'SUCCESS'}, status = status.HTTP_200_OK)
+                return Response({'MESSAGE' : 'SUCCESS'}, status = status.HTTP_200_OK)
 
             return Response({'MESSAGE' : 'KEY_ERROR'}, status = status.HTTP_400_BAD_REQUEST)
 
@@ -159,10 +157,10 @@ def update_delete_ad(request, advertiser, uid):
             ad.delete_at = datetime.now()
             ad.is_delete = True
             ad.save()
-            return JsonResponse({'MESSAGE': 'SUCCESS'}, status=status.HTTP_200_OK)
+            return JsonResponse({'MESSAGE' : 'SUCCESS'}, status=status.HTTP_200_OK)
 
         except Ad.DoesNotExist:
-            return JsonResponse({'MESSAGE': 'AD_DOES_NOT_EXIST'}, status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({'MESSAGE' : 'AD_DOES_NOT_EXIST'}, status=status.HTTP_404_NOT_FOUND)
 
     else:
-        return JsonResponse({'MESSAGE': 'METHOD_NOT_ALLOWED'}, status = status.HTTP_405_METHOD_NOT_ALLOWED)
+        return JsonResponse({'MESSAGE' : 'METHOD_NOT_ALLOWED'}, status = status.HTTP_405_METHOD_NOT_ALLOWED)
