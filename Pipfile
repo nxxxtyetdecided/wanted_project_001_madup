@@ -45,6 +45,9 @@ Django = "==4.0.4"
 PyMySQL = "==1.0.2"
 Markdown = "==3.3.6"
 Pygments = "==2.12.0"
+cffi = "==1.15.0"
+cryptography = "==37.0.1"
+pycparser = "==2.21"
 
 [dev-packages]
 
