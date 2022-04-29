@@ -17,58 +17,6 @@ import math
 
 
 @api_view(['GET'])
-def ad_list(request):
-    """
-    류성훈
-    모든 광고들의 정보를 조회합니다.
-    """
-    if request.method == 'GET':
-        ads = Ad.objects.all()
-        serializer = AdSerializer(ads, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-# 클릭당 코스트
-
-@api_view(['GET'])
-def ad_detail(request, pk):
-    """
-    류성훈
-    """
-    try:
-        ad = Ad.objects.get(uid=pk)
-    except Ad.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = AdSerializer(ad)
-        return JsonResponse(serializer.data)
-
-@api_view(['GET'])
-def result_list(request):                                                                                                                         
-    """
-    류성훈
-    """
-    if request.method == 'GET':
-        results = Result.objects.all()
-        serializer = ResultSerializer(results, many=True)
-        return JsonResponse(serializer.data, safe=False)
-        
-
-@api_view(['GET'])
-def result_detail(request, pk):
-    """
-    류성훈
-    """
-    try:
-        result = Result.objects.get(id=pk)
-    except Ad.DoesNotExist:
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = ResultSerializer(result)
-        return JsonResponse(serializer.data)
-
-@api_view(['GET'])
 def get_result(request):
     """
     류성훈
@@ -140,6 +88,9 @@ def get_create_ad(request):
         media         = request.data['media']
         uid           = request.data['uid']       
         
+        if not start_date or not end_date or not advertiser_id or not media or not uid:
+            return Response({'MESSAGE': 'MISSING_VALUE'}, status = 400)
+        
         #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
         start = datetime.strptime(start_date, '%Y-%m-%d')
         end   = datetime.strptime(end_date, '%Y-%m-%d')
@@ -173,17 +124,14 @@ def get_create_ad(request):
         for day in range(day.days+1):
             date = start + timedelta(days=day)
             Result.objects.create(
-                ad = new_ad,
+                uid   = new_ad,
                 media = media,
-                date = date
+                date  = date
             )
 
         serializer = AdSerializer(new_ad)
         return Response(serializer.data)
-    
-    #POST가 아닐때
-    else :
-        return Response({'MESSAGE': 'Method Not Allowed'}, status = 405)
+   
         
 
 
