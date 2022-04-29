@@ -76,6 +76,7 @@ def get_create_ad(request):
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         start_date = request.data['start_date']
         end_date   = request.data['end_date']
         
@@ -85,11 +86,14 @@ def get_create_ad(request):
 =======
 =======
 >>>>>>> 1c7743c (Fix: Change column name in Ad table and Result table)
+=======
+>>>>>>> 825ee988ae643e8bca14e2868961bb05df86dd0e
         start_date    = request.data['start_date']
         end_date      = request.data['end_date']
         advertiser_id = request.data['advertiser_id']
         media         = request.data['media']
         uid           = request.data['uid']       
+<<<<<<< HEAD
 <<<<<<< HEAD
         
         if not start_date or not end_date or not advertiser_id or not media or not uid:
@@ -97,6 +101,8 @@ def get_create_ad(request):
 >>>>>>> 8b5f382 (Feat: add create test case code)
 =======
 >>>>>>> 1c7743c (Fix: Change column name in Ad table and Result table)
+=======
+>>>>>>> 825ee988ae643e8bca14e2868961bb05df86dd0e
         
         #end-start day로 차이나는 값 만큼 result를 생성 (최소1)
         start = datetime.strptime(start_date, '%Y-%m-%d')
@@ -133,6 +139,7 @@ def get_create_ad(request):
             Result.objects.create(
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 ad=new_ad,
                 media=media,
                 date=date
@@ -146,6 +153,11 @@ def get_create_ad(request):
                 media = media,
                 date = date
 >>>>>>> 1c7743c (Fix: Change column name in Ad table and Result table)
+=======
+                ad = new_ad,
+                media = media,
+                date = date
+>>>>>>> 825ee988ae643e8bca14e2868961bb05df86dd0e
             )
 
         serializer = AdSerializer(new_ad)
