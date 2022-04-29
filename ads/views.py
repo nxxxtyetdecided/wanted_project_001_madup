@@ -139,33 +139,20 @@ def update_delete_ad(request, advertiser, uid):
         try:
             data = json.loads(request.body)
             ad = Ad.objects.get(advertiser = advertiser, uid = uid)
-            start_date = data.get('start_date', ad.start_date)
-            end_date = data.get('end_date', ad.end_date)
-            budget = data.get('budget', ad.budget)
-            estimated_spend = data.get('estimated_spend', ad.estimated_spend)
 
-            if start_date <= datetime.now().date():
-                return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
+            if ad.is_delete == True:
+                raise Ad.DoesNotExist
 
-            if start_date > end_date:
-                return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
+            serializer = AdSerializer(ad, data, partial=True)
+            
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'MESSAGE': 'SUCCESS'}, status = status.HTTP_200_OK)
 
-            if budget < 0 or estimated_spend < 0:
-                return JsonResponse({'MESSAGE': 'INVALID_VALUE'}, status = 400)
-
-            ad.start_date = start_date
-            ad.end_date = end_date
-            ad.budget = budget
-            ad.estimated_spend = estimated_spend
-            ad.save()
-
-            return JsonResponse({'MESSAGE': 'SUCCESS'}, status = 200)
-        
-        except KeyError:
-            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status = 400)
+            return Response({'MESSAGE' : 'KEY_ERROR'}, status = status.HTTP_400_BAD_REQUEST)
 
         except Ad.DoesNotExist:
-            return JsonResponse({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = 404)
+            return Response({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = status.HTTP_404_NOT_FOUND)
 
     elif request.method == 'DELETE':
         """
@@ -181,4 +168,7 @@ def update_delete_ad(request, advertiser, uid):
 
         except Ad.DoesNotExist:
             return JsonResponse({'MESSAGE': 'AD_DOES_NOT_EXIST'}, status=status.HTTP_404_NOT_FOUND)
+
+    else:
+        return JsonResponse({'MESSAGE': 'METHOD_NOT_ALLOWED'}, status = status.HTTP_405_METHOD_NOT_ALLOWED)
 
