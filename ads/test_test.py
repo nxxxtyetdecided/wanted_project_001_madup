@@ -11,6 +11,7 @@ from django.shortcuts import resolve_url
 # .view test
 # create
 
+
 @pytest.mark.django_db()
 class Test_view_create:
     """
@@ -121,17 +122,18 @@ class Test_view_create:
         response = self.create_post(client, set_user)
         assert response.status_code == 400
         assert response.json() == {'MESSAGE': 'INVALID_VALUE'}
-    
+
     def test_soft_delete_ad(self, client, set_user):
         advertiser = self.data['advertiser_id']
-        uid = self.data['uid']
-        self.create_post(client, set_user)        
-        client.delete(f'advertise/{advertiser}/{uid}'
-            )        
-        object1=Ad.objects.get(advertiser=advertiser,uid=uid)
-        print(object1.is_delete)
+        uid        = self.data['uid']
         
-        assert object1.is_delete == True        
+        self.create_post(client, set_user)
+        
+        client.delete(f'advertise/{advertiser}/{uid}')
+        
+        object1 = Ad.objects.get(advertiser=advertiser, uid=uid)        
+
+        assert object1.is_delete == True
 
 # 필수 항목 없이 광고 생성 post ()
 

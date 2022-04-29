@@ -1,76 +1,74 @@
 import json
+import math
 
 from datetime import datetime,timedelta
-from django.http import HttpResponse, JsonResponse
+from django.db.models import Sum
+from django.http import JsonResponse,HttpResponse
 from rest_framework import status
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .serializers import AdSerializer, ResultSerializer
+from .serializers import AdSerializer
 
 from ads.models import Ad, Result
 from ads.serializers import AdSerializer
 
 
-
 @api_view(['GET'])
-def ad_list(request):
-    """
-    류성훈
-    모든 광고들의 정보를 조회합니다.
-    """
-    if request.method == 'GET':
-        ads = Ad.objects.all()
-        serializer = AdSerializer(ads, many=True)
-        return JsonResponse(serializer.data, safe=False)
-
-# 클릭당 코스트
-
-@api_view(['GET'])
-def ad_detail(request, pk):
+def get_result(request):
     """
     류성훈
     """
+    # 광고주의 id 받아오기
+    advertiser_id = request.GET.get('advertiser', None)
+    print("광고주 advertiser:",advertiser_id)
+    
     try:
-        ad = Ad.objects.get(uid=pk)
-    except Ad.DoesNotExist:
-        return HttpResponse(status=404)
+        start_date = request.GET.get('start_date', None)
+        end_date = request.GET.get('end_date', None)
+    except TypeError:
+        return Response("타입이 잘못되었습니다.", status=404)
 
-    if request.method == 'GET':
-        serializer = AdSerializer(ad)
-        return JsonResponse(serializer.data)
+    # 광고주의 광고들을 불러옵니다.
+    advertiser = Ad.objects.filter(advertiser=advertiser_id)
+    if not advertiser:
+        return Response("존재하지 않는 광고주 id입니다.", status=404)
+    
+    advertiser_uid = advertiser.values('uid')
+    print('advertiser_uid:',advertiser_uid)
+    
+    media_list = ['naver', 'facebook', 'google', 'kekeo']
+    
+    answer = {}
+    for media in media_list:
+        objs = Result.objects.filter(uid__in=advertiser_uid, date__gte=start_date, date__lte=end_date, media=media)
+        if objs:
+            total = objs.aggregate(
+                total_click=Sum('click'),
+                total_impression = Sum('impression'),
+                total_cost = Sum('cost'),
+                total_conversion = Sum('conversion'),
+                total_cv = Sum('cv'),
+            )
 
-@api_view(['GET'])
-def result_list(request):
-    """
-    류성훈
-    """
-    if request.method == 'GET':
-        results = Result.objects.all()
-        serializer = ResultSerializer(results, many=True)
-        return JsonResponse(serializer.data, safe=False)
+            val = {
+                'ctr': math.trunc((total['total_click'] * 10000 / total['total_impression']))/100,
+                'roas': math.trunc(total['total_cv'] * 10000 / total['total_cost'])/100,
+                'cpc': math.trunc(total['total_cost'] * 100 / total['total_click'])/100,
+                'cvr': math.trunc(total['total_conversion'] * 10000 / total['total_click'])/100,
+                'cpa': math.trunc(total['total_cost'] * 100 / total['total_conversion'])/100,
+            }
 
-@api_view(['GET'])
-def result_detail(request, pk):
-    """
-    류성훈
-    """
-    try:
-        result = Result.objects.get(id=pk)
-    except Ad.DoesNotExist:
-        return HttpResponse(status=404)
+            answer[media] = val
 
-    if request.method == 'GET':
-        serializer = ResultSerializer(result)
-        return JsonResponse(serializer.data)
+    return Response(answer, status=200)
 
-#다른 코드가 정리되면 GET은 삭제하고 URL을 변경할 예정입니다
+
 @api_view(['POST'])
 def get_create_ad(request):    
     """
     김석재
     """
-        
     # 필수 입력값 4개(ad) + 1개 (result) 입력시 ad를 하나(캠페인)생성 , 기간에 따라 하루마다 하나씩 result를 생성
     if request.method == 'POST':
 
@@ -92,8 +90,6 @@ def get_create_ad(request):
             return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
         if start >= end:
             return Response({'MESSAGE': 'INVALID_DATE'}, status = 400)
-        
-
         
         new_ad = Ad.objects.create(
             start_date = start_date,
@@ -123,9 +119,6 @@ def get_create_ad(request):
 
         serializer = AdSerializer(new_ad)
         return Response(serializer.data)
-   
-        
-
 
 @api_view(['PATCH', 'DELETE'])
 def update_delete_ad(request, advertiser, uid):
@@ -151,22 +144,16 @@ def update_delete_ad(request, advertiser, uid):
             if start_date >= end_date:
                 return JsonResponse({'MESSAGE': 'INVALID_DATE'}, status = 400)
 
-            if budget < 0 or estimated_spend < 0:
-                return JsonResponse({'MESSAGE': 'INVALID_VALUE'}, status = 400)
+            serializer = AdSerializer(ad, data, partial=True)
+            
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response({'MESSAGE': 'SUCCESS'}, status = status.HTTP_200_OK)
 
-            ad.start_date = start_date
-            ad.end_date = end_date
-            ad.budget = budget
-            ad.estimated_spend = estimated_spend
-            ad.save()
-
-            return JsonResponse({'MESSAGE': 'SUCCESS'}, status = 200)
-        
-        except KeyError:
-            return JsonResponse({'MESSAGE' : 'KEY_ERROR'}, status = 400)
+            return Response({'MESSAGE' : 'KEY_ERROR'}, status = status.HTTP_400_BAD_REQUEST)
 
         except Ad.DoesNotExist:
-            return JsonResponse({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = 404)
+            return Response({'MESSAGE':'AD_DOES_NOT_EXIST'}, status = status.HTTP_404_NOT_FOUND)
 
     elif request.method == 'DELETE':
         """
@@ -181,4 +168,7 @@ def update_delete_ad(request, advertiser, uid):
             return JsonResponse(status=status.HTTP_201_CREATED, data=serializer.data)
         except Ad.DoesNotExist:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+
+    else:
+        return JsonResponse({'MESSAGE': 'METHOD_NOT_ALLOWED'}, status = status.HTTP_405_METHOD_NOT_ALLOWED)
 
