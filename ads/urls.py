@@ -3,8 +3,8 @@ from ads import views
 
 
 urlpatterns = [
-    path('', views.get_result),
-    path('a',views.get_create_ad),
+    path('result', views.get_result),
+    path('', views.post_create_ad),
     path('<str:advertiser>/<str:uid>', views.update_delete_ad)
 ]
 

@@ -20,27 +20,27 @@ class Test_view_create:
     @pytest.fixture
     def set_user(self, client):
         User.objects.create(
-            advertiser="37445221"
+            advertiser = "37445221"
         )
         self.data = {
-            "advertiser_id": "37445221",
-            "media": "naver",
-            "start_date": "2022-04-30",
-            "end_date": "2022-05-30",
-            "uid": "1819",            
+            "advertiser_id" : "37445221",
+            "media"         : "naver",
+            "start_date"    : "2022-04-30",
+            "end_date"      : "2022-05-30",
+            "uid"           : "1819",            
         }
     
     #반복되는 post     
     def create_post(self,client,set_user):
         response = client.post(
-            reverse(views.get_create_ad),
+            reverse(views.post_create_ad),
             data=self.data
         )
         return response
     
     #POST가 아닌 요청(GET사용)
     def test_create_get(self, client, set_user):
-        response=client.get(reverse(views.get_create_ad))             
+        response=client.get(reverse(views.post_create_ad))             
         assert response.status_code == 405
         assert response.json() == {'detail': 'Method "GET" not allowed.'}
         
@@ -96,7 +96,7 @@ class Test_view_create:
     def test_create_ad_with_invalid_start_date(self, client, set_user):
         self.data['start_date'] = "1500-01-15"
         response=self.create_post(client, set_user)
-        print(response.status_code,response.json())
+        
         assert response.status_code == 400
         assert response.json() == {'MESSAGE': 'INVALID_DATE'}
     
@@ -105,7 +105,7 @@ class Test_view_create:
         self.data['start_date'] = "2000-01-15"
         self.data['end_date'] = "2000-01-05"
         response=self.create_post(client, set_user)
-        print(response.status_code,response.json())
+       
         assert response.status_code == 400
         assert response.json() == {'MESSAGE': 'INVALID_DATE'}
         

@@ -20,8 +20,7 @@ def get_result(request):
     류성훈
     """
     # 광고주의 id 받아오기
-    advertiser_id = request.GET.get('advertiser', None)
-    print("광고주 advertiser:",advertiser_id)
+    advertiser_id = request.GET.get('advertiser', None)    
     
     try:
         start_date = request.GET.get('start_date', None)
@@ -35,7 +34,7 @@ def get_result(request):
         return Response("존재하지 않는 광고주 id입니다.", status=404)
     
     advertiser_uid = advertiser.values('uid')
-    print('advertiser_uid:',advertiser_uid)
+    
     
     media_list = ['naver', 'facebook', 'google', 'kekeo']
     
@@ -65,7 +64,7 @@ def get_result(request):
 
 
 @api_view(['POST'])
-def get_create_ad(request):    
+def post_create_ad(request):    
     """
     김석재
     """
@@ -131,7 +130,7 @@ def update_delete_ad(request, advertiser, uid):
         """
         try:
             data = json.loads(request.body)
-            ad = Ad.objects.get(user = advertiser, uid = uid)
+            ad = Ad.objects.get(advertiser = advertiser, uid = uid)
 
             start_date = datetime.strptime(str(data['start_date']), '%Y-%m-%d').date(),
             end_date = datetime.strptime(str(data['end_date']), '%Y-%m-%d').date(),
@@ -161,11 +160,14 @@ def update_delete_ad(request, advertiser, uid):
                 """        
         try:
             ad = Ad.objects.get(uid=uid)
+            if ad.is_delete == True:
+                raise Ad.DoesNotExist
             serializer = AdSerializer(ad)
             ad.delete_at = datetime.now()
             ad.is_delete = True
             ad.save()
-            return JsonResponse(status=status.HTTP_201_CREATED, data=serializer.data)
+            return JsonResponse({'MESSAGE': 'SUCCESS'}, status=status.HTTP_200_OK)
+
         except Ad.DoesNotExist:
             return HttpResponse(status=status.HTTP_404_NOT_FOUND)
 
