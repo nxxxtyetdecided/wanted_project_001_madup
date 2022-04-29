@@ -171,8 +171,7 @@ def update_delete_ad(request, advertiser, uid):
     elif request.method == 'DELETE':
         """
                     정미정 (soft delete로 구현)
-                """
-        print(uid)
+                """        
         try:
             ad = Ad.objects.get(uid=uid)
             serializer = AdSerializer(ad)

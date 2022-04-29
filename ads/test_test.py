@@ -123,17 +123,15 @@ class Test_view_create:
         assert response.json() == {'MESSAGE': 'INVALID_VALUE'}
     
     def test_soft_delete_ad(self, client, set_user):
+        advertiser = self.data['advertiser_id']
         uid = self.data['uid']
-        response = self.create_post(client, set_user)
-        client.delete(
-            resolve_url('advertiser:post_detail', 10)
-            )
+        self.create_post(client, set_user)        
+        client.delete(f'advertise/{advertiser}/{uid}'
+            )        
+        object1=Ad.objects.get(advertiser=advertiser,uid=uid)
+        print(object1.is_delete)
         
-
-
-        assert response.status_code == 200
-        assert Ad.objects.count() == 1
-        assert Result.objects.count() == 31
+        assert object1.is_delete == True        
 
 # 필수 항목 없이 광고 생성 post ()
 
