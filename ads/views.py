@@ -76,6 +76,7 @@ def get_create_ad(request):
 
         start_date = request.data['start_date']
         end_date   = request.data['end_date']
+        
         user_id    = request.data['user_id']
         media      = request.data['media']
         uid        = request.data['uid']       
