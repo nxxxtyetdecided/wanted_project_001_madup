@@ -428,3 +428,4 @@ my_settings.py
 db_uploader.py
 *.sql
 .env.db
+exit
