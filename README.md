@@ -61,11 +61,12 @@ DB의 데이터를 이용해 API를 구현하는 기본적인 설계 및 개발 
 
 ![](https://velog.velcdn.com/images/gshduet/post/220c7257-8de0-4cbf-8327-43c20969340c/image.png)
 
-![](https://velog.velcdn.com/images/gshduet/post/62d75525-e41f-48c7-a283-3ca12413fd4e/image.png)
+![image](https://user-images.githubusercontent.com/86823305/165966813-ae13e40b-6c4b-466b-be26-a5a8017b78eb.png)
 
-Django TestCase 라이브러리로 구현된 5개의 유닛테스트와 PyTest로 구현 된 17개의 유닛테스트 
 
-총 22개의 유닛테스트 구현, 통과 완료
+Django TestCase 라이브러리로 구현된 5개의 유닛테스트와 PyTest로 구현 된 15개의 유닛테스트 
+
+총 20개의 유닛테스트 구현, 통과 완료
 
 ## [API 명세서](https://documenter.getpostman.com/view/18212355/UyrGADmN)
 
@@ -109,7 +110,7 @@ Django TestCase 라이브러리로 구현된 5개의 유닛테스트와 PyTest�
     * object.filter 기능으로 특정 광고주들의 광고데이터들을 필터링 후 결과조회에 필요한 데이터들을 추출했습니다.
     * aggregate로 필요한 필드의 합을 구한 후 필요한 값을 연산한 뒤 math.trunc로 소숫점 셋째자리부터 버림을 하였고. 결과데이터를 반환에 성공할 시 200코드를 return 해줍니다.
 
-* 광고 결과 조회 API 테스트코드 작성
+* 광고 결과 조회 API 테스트코드 작성   
 
 * 로우데이터 분석
     * API를 만들기 전 대략적인 데이터 구조를 확인하고자 pandas를 이용하여 진행하였습니다.
