@@ -41,7 +41,7 @@ def ad_detail(request, pk):
         return JsonResponse(serializer.data)
 
 @api_view(['GET'])
-def result_list(request):
+def result_list(request):                                                                                                                         
     """
     류성훈
     """
@@ -49,6 +49,7 @@ def result_list(request):
         results = Result.objects.all()
         serializer = ResultSerializer(results, many=True)
         return JsonResponse(serializer.data, safe=False)
+        
 
 @api_view(['GET'])
 def result_detail(request, pk):
@@ -63,6 +64,35 @@ def result_detail(request, pk):
     if request.method == 'GET':
         serializer = ResultSerializer(result)
         return JsonResponse(serializer.data)
+
+@api_view(['GET'])
+def get_result(request):
+    """
+    류성훈
+    """
+    # 광고주의 id 받아오기
+    # advertiser_id = request.GET.get('id', None)
+    uid = request.GET.get('uid', None)
+    print("광고주 uid:",uid)
+
+    advertiser = Ad.objects.get(uid=uid)
+    print(advertiser)
+    serializer = AdSerializer(advertiser)
+    return Response(serializer.data)
+    # try:
+    #     start_date = request.GET.get('start_date', None)
+    #     end_date = request.GET.get('end_date', None)
+    #     print(start_date,end_date)
+    # except TypeError:
+    #     return Response("타입이 잘못되었습니다.", status=404)
+
+    # advertiser = Ad.objects.filter(uid=advertiser_id)
+
+    # if not advertiser:
+    #     return Response("존재하지 않는 광고주 id입니다.", status=404)
+
+    # print(advertiser, start_date, end_date)
+
 
 #다른 코드가 정리되면 GET은 삭제하고 URL을 변경할 예정입니다
 @api_view(['POST'])
