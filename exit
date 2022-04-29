@@ -1,0 +1,318 @@
+[33mcommit 5268afbd8d8fe40d02454c990a6131aef35b0d5c[m[33m ([m[1;36mHEAD[m[33m)[m
+Merge: dc709e0 f6daa7e
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 23:23:36 2022 +0900
+
+    Merge pull request #14 from Cloudblack/my_work
+    
+    Fix: Create url 수정, GET 삭제
+
+[33mcommit f6daa7e70f7db8630ebdda9ce4a2a26af81cfdbe[m[33m ([m[1;31morigin/my_work[m[33m, [m[1;31mcb/my_work[m[33m)[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 23:21:10 2022 +0900
+
+    Fix: Create url 수정, GET 삭제
+
+[33mcommit dc709e0aedb4c8185f9b426f27f9b37540fcebe0[m
+Merge: 0cafcfc 8262d59
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 23:12:41 2022 +0900
+
+    Merge pull request #13 from Cloudblack/my_work
+    
+    Comment: 주석 추가
+
+[33mcommit 8262d5970129c74c006652310dec2713a7fa84c4[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 23:11:17 2022 +0900
+
+    Comment: 주석 추가
+
+[33mcommit 0cafcfc5ee61b66660375d5696ff91c1283c5858[m
+Merge: 2929c0c 355d44e
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 23:09:15 2022 +0900
+
+    Merge pull request #12 from Cloudblack/my_work
+    
+    Fix: 미완성된 Create 기능 구현
+
+[33mcommit 355d44eba3a2eeef6de127c974375eb40ff97fd7[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 23:02:07 2022 +0900
+
+    Fix: 미완성된 Create 기능 구현
+
+[33mcommit 2929c0cefcbba4b77fdbc873e402c7f653c15127[m
+Merge: 9308a65 5a0a9c0
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 14:53:32 2022 +0900
+
+    Merge pull request #11 from nxxxtyetdecided/nxxxtyetdecided
+    
+    Feat: Add advertise delete
+
+[33mcommit 5a0a9c04e94ed75fe4faa81612603b5e3f378b54[m
+Author: nxxxtyetdecided <nxxxtyetdecided@gmail.com>
+Date:   Thu Apr 28 14:50:10 2022 +0900
+
+    Feat: Add advertise delete
+
+[33mcommit 9308a651984ef2b142966404e0fc909a3279c9b4[m
+Merge: 692e313 a22970b
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 14:22:06 2022 +0900
+
+    Merge pull request #10 from gshduet/feat/Add_update_ad
+    
+    Faet: Add advertise update logic
+
+[33mcommit a22970bd1f3958aa081cdfd8a5fd98a58768b62b[m
+Author: gshduet <modis2199@gmail.com>
+Date:   Thu Apr 28 13:47:13 2022 +0900
+
+    Faet: Add advertise update logic
+    
+    광고주가  의도대로 광고의 스케쥴, 예산 등을 직접 수정하는 기능 추가
+    로그인 후 특정 광고의 상세페이지 진입 시 수정 가능
+
+[33mcommit 692e31371a69ca9bc558a8cf1cc9a3eabae7742f[m
+Merge: 85a6e04 399e613
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 13:56:08 2022 +0900
+
+    Merge pull request #9 from rsh1994/ryu
+    
+    
+    Feat: result view 작성
+
+[33mcommit 399e613af028375ca41dcec6999ff7b2a0fb4017[m
+Merge: ea34074 85a6e04
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 13:54:37 2022 +0900
+
+    Merge branch 'ryu' of https://github.com/rsh1994/wanted_project_001_madup into ryu
+
+[33mcommit ea34074e6edc8d50e61a705ecd214c5cc8454fe2[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 13:52:30 2022 +0900
+
+    Feat: result view 작성
+
+[33mcommit 85a6e040b19c64ce1cb09bf14b13100ad965f4c0[m
+Merge: f99b618 8edaa97
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 13:49:17 2022 +0900
+
+    Merge pull request #8 from Cloudblack/my_work
+    
+    Feat: Create 기능 구현중 v1
+
+[33mcommit 8edaa97f0017714affac535c54d69becb958233e[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 13:47:26 2022 +0900
+
+    Feat: Create 기능 구현중  v1
+
+[33mcommit 77f82e32ef0f357fb052b46bb2a75b2c273ec99c[m
+Merge: 32a9f3d f99b618
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 10:47:19 2022 +0900
+
+    Merge branch 'main' of https://github.com/Cloudblack/wanted_project_001_madup into my_work
+
+[33mcommit 32a9f3d562162ab8ac9cd6cbfb6adcf0593edb51[m
+Merge: 24eefc8 53adf90
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 10:47:12 2022 +0900
+
+    error solved
+
+[33mcommit f99b61846499ff938f565745a80f2778cb7e3471[m
+Merge: 53adf90 02d1d01
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 10:45:39 2022 +0900
+
+    Merge pull request #7 from rsh1994/ryu
+    
+    Feat: csrf->api_view 로 변경
+
+[33mcommit 24eefc82916e91bf3e0a90477b7e3bd278d0150e[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Thu Apr 28 10:42:19 2022 +0900
+
+    error solved
+
+[33mcommit 02d1d01e76f66dacb9f56e0129908d681ae899fd[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 10:37:40 2022 +0900
+
+    Feat: csrf->api_view 로 변경
+    
+    ad_list, ad_detail에서 csrf가 쓰이던 것을
+    api_view['GET']으로 변경하였다.
+
+[33mcommit 53adf90461f7bd1473feaa119e5a634cec690df1[m
+Merge: 46cfcee a41db7c
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 10:34:29 2022 +0900
+
+    Merge pull request #6 from rsh1994/ryu
+    
+    Feat: GET view작성(v2)
+
+[33mcommit a41db7c76ed5e6a5f79e4df011e4ec52eace7b64[m
+Merge: defaee1 46cfcee
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 10:31:21 2022 +0900
+
+    Merge branch 'main' of https://github.com/rsh1994/wanted_project_001_madup into ryu
+
+[33mcommit defaee142a062c7480bc3209c63c544d5f6ec284[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 10:15:32 2022 +0900
+
+    Feat: GET view작성(v2)
+    
+    Ad detail view 수정완료
+    ~/advertise/uid/ 로 조회 시 상세정보 확인 가능
+    
+    나중에 인덱싱한 내용으로 변경할 예정
+
+[33mcommit 46cfcee085d7af469a0a866a33a0e10150271b15[m
+Merge: df55044 5ed7b86
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 10:13:52 2022 +0900
+
+    Merge pull request #5 from nxxxtyetdecided/nxxtyetdecided
+    
+    update_delete_ad 함수 추가
+
+[33mcommit 5ed7b8664c2ef0bd8d5244fd9725ab3f0e00d351[m
+Author: nxxxtyetdecided <nxxxtyetdecided@gmail.com>
+Date:   Thu Apr 28 10:06:30 2022 +0900
+
+    Feat: Add def update_delete_ad
+
+[33mcommit 6a0e28a494f5a577e9ba5976b6aaf143728a0049[m
+Author: nxxxtyetdecided <nxxxtyetdecided@gmail.com>
+Date:   Thu Apr 28 09:58:15 2022 +0900
+
+    Revert "Feat : "update_delete_ad 함수 추가""
+    
+    This reverts commit ebe9749b9e5f91c9c6b8a18cda9f1b0f8530b0e4.
+
+[33mcommit ebe9749b9e5f91c9c6b8a18cda9f1b0f8530b0e4[m
+Author: nxxxtyetdecided <nxxxtyetdecided@gmail.com>
+Date:   Thu Apr 28 09:56:23 2022 +0900
+
+    Feat : "update_delete_ad 함수 추가"
+
+[33mcommit 487dbe2b3cca963afd23df9e5a3367fa2b73e3a8[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 09:28:56 2022 +0900
+
+    Feat: GET View, 상품 디테일 함수작성 (v2)
+    
+    광고 하나하나의 상세정보를 조회하기위한 뷰를 작성
+    
+    pk를 uid로 해놓았는데, 인덱스값이 생기면 그걸로 바꿀 예정
+
+[33mcommit 8017f0bac8c4a4e7aee94513f7aa1cdd2d1ae854[m
+Merge: acf66be df55044
+Author: ryuchelin <72593394+rsh1994@users.noreply.github.com>
+Date:   Thu Apr 28 09:24:50 2022 +0900
+
+    Merge branch 'Cloudblack:main' into ryu
+
+[33mcommit df55044b6bb8acdb6711af81275c300a38586de9[m
+Merge: e906f79 ce7f084
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Thu Apr 28 09:23:23 2022 +0900
+
+    Merge pull request #4 from gshduet/feat/Add_db_indexing
+    
+    Feat: Add DB index
+
+[33mcommit ce7f084845180db4c40a1566d2ca740d9c627449[m
+Author: gshduet <modis2199@gmail.com>
+Date:   Thu Apr 28 09:15:40 2022 +0900
+
+    Feat: Add DB index
+    
+    MADUP 측에서 요청한 index 추가
+    자주 조회될 Ad 테이블의 user, uid컬럼, Result 테이블의 ad, media, date 컬럼에 index 추가 완료
+
+[33mcommit acf66beb9f998030be48c5184cb043f6cbae5353[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Thu Apr 28 09:08:07 2022 +0900
+
+    Feat: GET view 작성(v1)
+
+[33mcommit e906f79ed5403682f2dc63db3c4ea16cc49808fd[m
+Merge: 0ae03b2 b928594
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Wed Apr 27 23:12:28 2022 +0900
+
+    Merge pull request #3 from Cloudblack/my_work
+    
+    Feat: pytest 설치
+
+[33mcommit b928594fe9eb25ab6299802cd0ece7d427231728[m
+Author: Clbl <hahakim77@naver.com>
+Date:   Wed Apr 27 23:02:14 2022 +0900
+
+    Feat: pytest 설치
+
+[33mcommit 6dcdb20c4a9c5d043605e9cdda4c5e4f88c8953c[m
+Merge: b4cfcf9 0ae03b2
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Wed Apr 27 21:14:39 2022 +0900
+
+    Merge branch 'ryu' of https://github.com/rsh1994/wanted_project_001_madup into ryu
+
+[33mcommit b4cfcf9a9f1d1b4a874d3d7bae21227f5236dbc3[m
+Author: 류성훈 <ryucherry@ryu-MacBookPro.local>
+Date:   Wed Apr 27 21:14:15 2022 +0900
+
+    before pull
+
+[33mcommit 0ae03b245be083a57b38b1d7836578d188e4c929[m[33m ([m[1;32mmain[m[33m)[m
+Merge: 0946e79 e8fe07d
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Wed Apr 27 17:56:06 2022 +0900
+
+    Merge pull request #2 from gshduet/feat/modeling
+    
+    Feat : "모델링, 마이그레이션 및 데이터 DB 입력"
+
+[33mcommit e8fe07d0e00257e32c546f517a432b5b266b7d44[m
+Author: gshduet <modis2199@gmail.com>
+Date:   Wed Apr 27 17:29:49 2022 +0900
+
+    Feat : "모델링, 마이그레이션 및 데이터 DB 입력"
+    
+    사전에 정의한 스키마에 따라 ERD 설계 및 MySQL을 통한 DB구축
+    Migration 완료 후 migrate 파일 생성
+    MADUP으로부터 받은 csv파일을 DB에 입력
+
+[33mcommit 0946e79ab6d2a5562682c9f66ef7d6b71eab489f[m
+Merge: 2db995f 8417a11
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Wed Apr 27 08:55:07 2022 +0900
+
+    Merge pull request #1 from gshduet/feat/InitialSetting
+    
+    Project_001 'MADUP' Initial setting
+
+[33mcommit 8417a11188b208376727023c8937f488f92c4543[m
+Author: gshduet <modis2199@gmail.com>
+Date:   Tue Apr 26 20:00:30 2022 +0900
+
+    Project_001 'MADUP' Initial setting
+
+[33mcommit 2db995fab2e0df63d36166cd14cc779eb9da5f15[m
+Author: Cloudblack <86823305+Cloudblack@users.noreply.github.com>
+Date:   Tue Apr 26 18:11:09 2022 +0900
+
+    Initial commit

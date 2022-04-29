@@ -1,3 +1,4 @@
+
 import json
 import math
 
@@ -21,7 +22,6 @@ def get_result(request):
     """
     # 광고주의 id 받아오기
     advertiser_id = request.GET.get('advertiser', None)
-    print("광고주 advertiser:",advertiser_id)
     
     try:
         start_date = request.GET.get('start_date', None)
@@ -35,7 +35,7 @@ def get_result(request):
         return Response("존재하지 않는 광고주 id입니다.", status=404)
     
     advertiser_uid = advertiser.values('uid')
-    print('advertiser_uid:',advertiser_uid)
+
     
     media_list = ['naver', 'facebook', 'google', 'kekeo']
     
@@ -65,7 +65,7 @@ def get_result(request):
 
 
 @api_view(['POST'])
-def get_create_ad(request):    
+def post_create_ad(request):    
     """
     김석재
     """
@@ -166,4 +166,3 @@ def update_delete_ad(request, advertiser, uid):
 
     else:
         return JsonResponse({'MESSAGE': 'METHOD_NOT_ALLOWED'}, status = status.HTTP_405_METHOD_NOT_ALLOWED)
-
