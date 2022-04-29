@@ -169,15 +169,16 @@ def update_delete_ad(request, advertiser, uid):
 
     elif request.method == 'DELETE':
         """
-                    정미정 (soft delete로 구현)
-                """
+            정미정 (soft delete로 구현)
+        """
         try:
             ad = Ad.objects.get(uid=uid)
             serializer = AdSerializer(ad)
             ad.delete_at = datetime.now()
             ad.is_delete = True
             ad.save()
-            return JsonResponse(status=status.HTTP_201_CREATED, data=serializer.data)
+            return JsonResponse({'MESSAGE': 'SUCCESS'}, status=status.HTTP_201_CREATED, data=serializer.data)
+
         except Ad.DoesNotExist:
-            return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+            return JsonResponse({'MESSAGE': 'AD_DOES_NOT_EXIST'}, status=status.HTTP_404_NOT_FOUND)
 
