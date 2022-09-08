@@ -8,7 +8,6 @@ from rest_framework            import status
 from rest_framework.response   import Response
 from rest_framework.decorators import api_view
 
-from ads.serializers import AdSerializer
 from ads.models      import Ad, Result
 from ads.serializers import AdSerializer
 
@@ -152,7 +151,6 @@ def update_delete_ad(request, advertiser, uid):
             ad = Ad.objects.get(uid=uid)
             if ad.is_delete == True:
                 raise Ad.DoesNotExist
-            serializer = AdSerializer(ad)
             ad.delete_at = datetime.now()
             ad.is_delete = True
             ad.save()
