@@ -1,23 +1,24 @@
 services:
   db:
     image: mysql:8.0.28
-    container_name: db
+    container_name: mysql.django
     ports:
       - 3306:3306
     env_file:
       - .env.db
-#    environment:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
     volumes:
       - data:/var/lib/mysql/
       - ./001_madup.sql:/docker-entrypoint-initdb.d/001_madup.sql
-    restart: always
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-uroot', '-p$${MYSQL_ROOT_PASSWORD}' ]
+      timeout: 3s
+      retries: 2
 
   web:
     build: .
-#    dockerfile: Dockerfile
     command: >
       bash -c "python /code/manage.py migrate
       && python /code/manage.py runserver 0.0.0.0:8000"
@@ -27,7 +28,8 @@ services:
       - 8000:8000
     depends_on:
       - db
-
+      db:
+        condition: service_healthy
 
 volumes:
   data:
